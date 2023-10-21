@@ -339,9 +339,9 @@ i {
 
 .modal-container {
     position: fixed;
-    top: 35%;
+    top: 15%;
     width: 100%;
-    height: 500px;
+    height: 100%;
     background-color: #84A4BC;
 }
 
@@ -395,6 +395,21 @@ i {
     gap:30px;
 }
 
-.crypto-price-in-modal {
-    font-weight: 600;
+
+.chart {
+    background-color: white;
+    margin: 10px;
+    opacity:0.8;
+}
+.other-info-container {
+    padding: 24px;
+}
+
+.infos-container {
+    display: flex;
+    flex-direction: column;
+    gap:20px;
+    background-color: white;
+    padding:15px;
+    border: 1px solid black;
 }

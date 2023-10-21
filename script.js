@@ -122,42 +122,107 @@ document.addEventListener('DOMContentLoaded', function() {
                         modalWrapper.remove();
                     })
 
-                    const cryptoValuesInModalContainer = document.createElement("div");
-                    cryptoValuesInModalContainer.classList.add('crypto-values-in-modal-container');
-
                     const cryptoPriceInModal = document.createElement("span");
-                    cryptoPriceInModal.textContent = "Valeur en euros : " + crypto.current_price + ' €';
-                    cryptoPriceInModal.classList.add('crypto-price-in-modal');
-
+                    cryptoPriceInModal.textContent = "Valeur en euros : ";
+                    const cryptoPrice = document.createElement("span");
+                    cryptoPrice.textContent = crypto.current_price + ' €'
+                    cryptoPrice.style.fontWeight = 800;
+                    cryptoPriceInModal.appendChild(cryptoPrice);
 
                     const cryptoPercentInModal = document.createElement("span");
-                    const cryptoPercentValueInModal = crypto.price_change_percentage_24h
-
+                    const cryptoPercentValueInModal = crypto.price_change_percentage_24h;
+                    
                     if (cryptoPercentValueInModal > 0) {
                         const formattedPercentage = parseFloat(crypto.price_change_percentage_24h).toFixed(2);
-                        cryptoPercentInModal.textContent = '+' + formattedPercentage + ' €';
-                        cryptoPercentInModal.classList.add("green");
+                    
+                        const percentageSpan = document.createElement("span");
+                        percentageSpan.classList.add("green");
+                        percentageSpan.textContent = '+' + formattedPercentage + ' €';
+                        percentageSpan.style.fontWeight = 800;
+
+                        cryptoPercentInModal.textContent = 'Variation du prix en % depuis 24H : ';
+                        cryptoPercentInModal.appendChild(percentageSpan);
                     } else {
                         const formattedPercentage = parseFloat(crypto.price_change_percentage_24h).toFixed(2);
-                        cryptoPercentInModal.textContent = formattedPercentage + ' €';
-                        cryptoPercentInModal.classList.add("red");
+                    
+                        const percentageSpan = document.createElement("span");
+                        percentageSpan.classList.add("red");
+                        percentageSpan.textContent = formattedPercentage + ' €';
+                        percentageSpan.style.fontWeight = 800;
+                    
+                        cryptoPercentInModal.textContent = 'Variation du prix en % depuis 24H : ';
+                        cryptoPercentInModal.appendChild(percentageSpan);
                     }
-
+                    
                     body.appendChild(modalWrapper);
                     modalWrapper.appendChild(modalHeader);
                     modalHeader.appendChild(modalHeaderTitleContainer);
                     modalHeader.appendChild(closeButtonContainer);
-                    modalWrapper.appendChild(cryptoValuesInModalContainer);
-                    cryptoValuesInModalContainer.appendChild(cryptoPriceInModal);
-                    cryptoValuesInModalContainer.appendChild(cryptoPercentInModal);
-
 
                     modalHeaderTitleContainer.appendChild(cryptoIconeModal)
                     modalHeaderTitleContainer.appendChild(cryptoNameModal)
                     closeButtonContainer.appendChild(closeModalButton)
+                    displayChart(crypto.id, modalWrapper);
 
+                    const cryptoOtherInfoContainer = document.createElement("div");
+                    cryptoOtherInfoContainer.classList.add("other-info-container");
+
+                    const otherInfoTitle = document.createElement("h3");
+                    otherInfoTitle.textContent = "Autres informations"
+
+                    const cryptoInfosContainer = document.createElement("div");
+                    cryptoInfosContainer.classList.add("infos-container");
+
+                    const cryptoMarketRank = document.createElement("span");
+                    cryptoMarketRank.textContent = "Classement par capitalisation boursière : "
+                    const marketRank = document.createElement("span");
+                    marketRank.textContent =  "N°" + crypto.market_cap_rank;
+                    marketRank.style.fontWeight = 800;
+                    cryptoMarketRank.appendChild(marketRank)
+
+
+                    const cryptoMarketCap = document.createElement("span");
+                    cryptoMarketCap.textContent = "Capitalisation boursière : ";
+                    const marketCap = document.createElement("span");
+                    marketCap.textContent =  crypto.market_cap + " €";
+                    marketCap.style.fontWeight = 800;
+                    cryptoMarketCap.appendChild(marketCap)
+
+                    const cryptoQuantity = document.createElement("span");
+                    cryptoQuantity.textContent = "Quantité en circulation : ";
+                    const quantity = document.createElement("span");
+                    quantity.textContent =  crypto.circulating_supply;
+                    quantity.style.fontWeight = 800;
+                    cryptoQuantity.appendChild(quantity)
+
+                    const dateFromAPI = crypto.last_updated;
+                    const date = new Date(dateFromAPI);
+                    const year = date.getFullYear();
+                    const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+                    const day = date.getDate().toString().padStart(2, '0');
+                    const hours = date.getHours().toString().padStart(2, '0');
+                    const minutes = date.getMinutes().toString().padStart(2, '0');
+                    const formattedDate = `${day}/${month}/${year} ${hours}:${minutes}`;
+
+                    const cryptoTime= document.createElement("span");
+                    cryptoTime.textContent = "Dernière actualisation : ";
+                    const time = document.createElement("span");
+                    time.textContent =  formattedDate;
+                    time.style.fontWeight = 800;
+                    cryptoTime.appendChild(time)
+
+                    modalWrapper.appendChild(cryptoOtherInfoContainer)
+                    cryptoOtherInfoContainer.appendChild(otherInfoTitle)
+                    cryptoOtherInfoContainer.appendChild(cryptoInfosContainer)
+                    cryptoInfosContainer.appendChild(cryptoPriceInModal);
+                    cryptoInfosContainer.appendChild(cryptoPercentInModal);
+                    cryptoInfosContainer.appendChild(cryptoMarketRank)
+                    cryptoInfosContainer.appendChild(cryptoMarketCap)
+                    cryptoInfosContainer.appendChild(cryptoQuantity)
+                    cryptoInfosContainer.appendChild(cryptoTime)
 
                 }
+               
             });
         })
         .catch(function(error) {
@@ -165,3 +230,64 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 });
 
+
+function displayChart(cryptoId, container) {
+    const canvas = document.createElement("canvas");
+    canvas.classList.add("chart")
+    canvas.width = 400;
+    canvas.height = 200;
+    container.appendChild(canvas);
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", `https://api.coingecko.com/api/v3/coins/${cryptoId}/market_chart?vs_currency=eur&days=14`);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            const data = JSON.parse(xhr.responseText);
+
+        const timestamps = data.prices.map(entry => {
+            const date = new Date(entry[0]);
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0'); 
+            const year = date.getFullYear();
+            return `${day}/${month}/${year}`;
+        });
+            const prices = data.prices.map(entry => entry[1]);
+
+            const canvas = container.querySelector("canvas");
+            const ctx = canvas.getContext("2d");
+
+            const chartConfig = {
+                type: "line",
+                data: {
+                    labels: timestamps,
+                    datasets: [
+                        {
+                            label: "Prix en EUR sur 7 jours",
+                            data: prices,
+                            borderColor: "rgba(75, 192, 192, 1)",
+                            borderWidth: 1,
+                            backgroundColor: "rgba(255, 0, 0, 0.2)",
+                            fill: true
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: "category", 
+                            labels: timestamps, 
+                        },
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            };
+            
+            new Chart(ctx, chartConfig);
+        } else if (xhr.status !== 200) {
+            console.error("Erreur lors de la requête AJAX : " + xhr.status);
+        }
+    };
+    xhr.send();
+}
