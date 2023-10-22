@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 const cryptoDiv = document.createElement('div');
                 cryptoDiv.classList.add('crypto-container');
 
+                const cryptoIconeNameAndSymbolContainer = document.createElement('div');
+                cryptoIconeNameAndSymbolContainer.classList.add('crypto-icone-name-and-symbol-container');
+
                 const cryptoIcone= document.createElement('img');
                 cryptoIcone.setAttribute("src", crypto.image );
                 cryptoIcone.classList.add("crypto-icone");
@@ -35,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 cryptoDivValueAndPercent.classList.add('crypto-container-value-and-percent');
 
                 const cryptoPrice = document.createElement('span');
-                cryptoPrice.textContent = crypto.current_price + ' €';
+                cryptoPrice.textContent = crypto.current_price.toFixed(2) + ' €';
                 cryptoPrice.classList.add('crypto-price');
 
                 const cryptoPercent = document.createElement('span');
@@ -73,12 +76,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     heartIconeFull.style.display = "none";
                     heartIconeRegul.style.display = "block";
                 })
-
-                cryptoDiv.appendChild(cryptoIcone);
-                cryptoDiv.appendChild(cryptoDivnameAndSymbol);
+                cryptoContainer.appendChild(cryptoDiv);
+                cryptoDiv.appendChild(cryptoIconeNameAndSymbolContainer);
                 cryptoDiv.appendChild(cryptoDivValueAndPercent);
                 cryptoDiv.appendChild(heartContainer);
 
+                cryptoIconeNameAndSymbolContainer.appendChild(cryptoIcone)
+                cryptoIconeNameAndSymbolContainer.appendChild(cryptoDivnameAndSymbol);
                 cryptoDivnameAndSymbol.appendChild(cryptoSymbol);
                 cryptoDivnameAndSymbol.appendChild(cryptoName);
 
@@ -89,7 +93,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 heartContainer.appendChild(heartIconeFull);
 
 
-                cryptoContainer.appendChild(cryptoDiv);
 
                 function displayModal () {
                     const body = document.querySelector("body");
@@ -122,6 +125,41 @@ document.addEventListener('DOMContentLoaded', function() {
                         modalWrapper.remove();
                     })
 
+                    const chartIcone = document.createElement("span");
+                    chartIcone.classList.add('fa-chart-line');
+                    chartIcone.classList.add('fa-solid');
+
+                    const hideIcone = document.createElement("span");
+                    hideIcone.classList.add('fa-eye-slash');
+                    hideIcone.classList.add('fa-solid');
+                    
+                    const chartContainer = document.createElement("div");
+                    chartContainer.classList.add('chart-container');
+
+                    
+                    body.appendChild(modalWrapper);
+                    modalWrapper.appendChild(modalHeader);
+                    modalHeader.appendChild(modalHeaderTitleContainer);
+                    modalHeader.appendChild(closeButtonContainer);
+                    modalWrapper.appendChild(chartIcone)
+                    modalWrapper.appendChild(hideIcone)
+                    modalWrapper.appendChild(chartContainer)
+
+
+                    modalHeaderTitleContainer.appendChild(cryptoIconeModal)
+                    modalHeaderTitleContainer.appendChild(cryptoNameModal)
+                    closeButtonContainer.appendChild(closeModalButton)
+                    displayChart(crypto.id, chartContainer);
+
+                    const cryptoOtherInfoContainer = document.createElement("div");
+                    cryptoOtherInfoContainer.classList.add("other-info-container");
+
+                    const otherInfoTitle = document.createElement("h3");
+                    otherInfoTitle.textContent = "Autres informations"
+
+                    const cryptoInfosContainer = document.createElement("div");
+                    cryptoInfosContainer.classList.add("infos-container");
+
                     const cryptoPriceInModal = document.createElement("span");
                     cryptoPriceInModal.textContent = "Valeur en euros : ";
                     const cryptoPrice = document.createElement("span");
@@ -153,25 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         cryptoPercentInModal.textContent = 'Variation du prix en % depuis 24H : ';
                         cryptoPercentInModal.appendChild(percentageSpan);
                     }
-                    
-                    body.appendChild(modalWrapper);
-                    modalWrapper.appendChild(modalHeader);
-                    modalHeader.appendChild(modalHeaderTitleContainer);
-                    modalHeader.appendChild(closeButtonContainer);
-
-                    modalHeaderTitleContainer.appendChild(cryptoIconeModal)
-                    modalHeaderTitleContainer.appendChild(cryptoNameModal)
-                    closeButtonContainer.appendChild(closeModalButton)
-                    displayChart(crypto.id, modalWrapper);
-
-                    const cryptoOtherInfoContainer = document.createElement("div");
-                    cryptoOtherInfoContainer.classList.add("other-info-container");
-
-                    const otherInfoTitle = document.createElement("h3");
-                    otherInfoTitle.textContent = "Autres informations"
-
-                    const cryptoInfosContainer = document.createElement("div");
-                    cryptoInfosContainer.classList.add("infos-container");
 
                     const cryptoMarketRank = document.createElement("span");
                     cryptoMarketRank.textContent = "Classement par capitalisation boursière : "
@@ -211,6 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     time.style.fontWeight = 800;
                     cryptoTime.appendChild(time)
 
+                   
                     modalWrapper.appendChild(cryptoOtherInfoContainer)
                     cryptoOtherInfoContainer.appendChild(otherInfoTitle)
                     cryptoOtherInfoContainer.appendChild(cryptoInfosContainer)
@@ -234,8 +254,8 @@ document.addEventListener('DOMContentLoaded', function() {
 function displayChart(cryptoId, container) {
     const canvas = document.createElement("canvas");
     canvas.classList.add("chart")
-    canvas.width = 400;
-    canvas.height = 200;
+    canvas.width = 20;
+    canvas.height = 10;
     container.appendChild(canvas);
 
     const xhr = new XMLHttpRequest();
@@ -290,4 +310,52 @@ function displayChart(cryptoId, container) {
         }
     };
     xhr.send();
+
+const chartIcone = document.querySelector(".fa-chart-line");
+const graphic = document.querySelector(".chart");
+const hideIcone = document.querySelector(".fa-eye-slash");
+
+function masquerCanvas() {
+    graphic.style.display = "none";
+    chartIcone.style.display = "block";
+    hideIcone.style.display = "none";
+  }
+  
+  // Fonction pour afficher le canvas
+  function afficherCanvas() {
+    graphic.style.display = "block";
+    chartIcone.style.display = "none";
+    hideIcone.style.display = "block";
+  }
+
+  chartIcone.addEventListener("click", afficherCanvas)
+  hideIcone.addEventListener("click", masquerCanvas)
+
+
+  // Vérification initiale de la largeur de l'écran
+  if (window.matchMedia("(min-width: 768px)").matches) {
+    masquerCanvas();
+  } else {
+    afficherCanvas();
+  }
+  
+  // Ajouter un écouteur de média query pour détecter les changements
+  const mediaQuery = window.matchMedia("(min-width: 768px)");
+
+  function handleMediaChange(e) {
+    if (e.matches) {
+      masquerCanvas();
+    } else {
+      afficherCanvas();
+      hideIcone.style.display = "none";
+
+    }
+  }
+  
+  mediaQuery.addEventListener("change", handleMediaChange);
+  
+  // Vérification initiale de la largeur de l'écran
+  handleMediaChange(mediaQuery);
+  
+  
 }

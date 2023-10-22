@@ -11,6 +11,8 @@ header {
 }
 h1 {
    color: #E9B522;
+   text-align: center;
+
 }
 h2 {
     font-weight: 800;
@@ -20,17 +22,23 @@ h2 {
     display: flex;
     justify-content: end;
 }
+
+
 .logo {
     width: 170px;
     height: 170px;
 }
-
+.login-button-desktop {
+    display: none;
+}
 .title-and-logo {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 80px;
+    margin-top: 0px;
+    background-color: #07297C;
+    border:none;
 }
 
 .signup-button {
@@ -44,19 +52,27 @@ h2 {
 
 
 .description-text {
-    margin: 0px;
+    margin: -1px;
     font-size: 26px;
     color: #99B0F3;
     background-color: #07297C;
     padding:15px;
-    padding-bottom: 70px;
+    padding-bottom: 30px;
+    text-align: center;
+    border:none;
 }
 
+.landingpage-image {
+    display: none;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
 .login-form {
     display: flex;
     flex-direction: column;
     background-color: #99B0F3;
-    padding: 40px;
+    padding-inline: 40px;
+    padding-block: 20px;
+
 }
 .input-in-login-form {
     height: 45px;
@@ -84,7 +100,33 @@ h2 {
     margin-top: 10px;
 }
 
+.signup-button-desktop {
+    display: none;
+}
+.footer-in-landing {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #475460;
+    display: flex;
+    flex-direction: row;
+    color:white;
+    justify-content: space-around;
+    align-items: center;
+    padding-block: 5px;
+    border: 2px solid #000;
+}
+
+.title-login-mobile {
+    margin-top:0px;
+}
 /* SIGNUP PAGE */
+
+.nav-bar-signup-page {
+    display: flex;
+    justify-content: end;
+}
 
 .returntomain-button {
     margin-top:15px;
@@ -139,12 +181,22 @@ label {
 .body-cryptopage {
     background-color: #07297C;
 }
+.logo-in-cryptopage {
+    display: none;
+}
 
+.logo-and-title-in-cryptopage {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 50%;
+
+}
 .main-title-in-cryptopage {
     margin:0px;
     font-size: 16px;
-    width: 50%;
-    margin-left: 16px;
+    width: 74%;
+    margin-left: 10px;
 }
 
 .header-in-cryptopage {
@@ -154,8 +206,8 @@ label {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 
 }
 .nav-bar-cryptopage{
@@ -167,6 +219,7 @@ label {
     margin-right: 16px;
 }
 .nav-button {
+    display: none;
     background-color: white;
     color:black;
     border-radius: 15px;
@@ -174,12 +227,21 @@ label {
     padding-block:4px;
     text-decoration: none;
 }
+
+.icone-nav-bar {
+    border: #E9B522 2px solid;
+    padding:10px;
+    border-radius: 50%;
+    background-color:#1554F0;
+
+}
 .user-container {
     display: flex;
     flex-direction: row;
     padding-top : 100px;
-    padding-inline: 15px;
+    padding-left: 15px;
     background-color: #07297C;
+    width: 100%;
 }
 .avatar {
     width: 100px;
@@ -190,7 +252,7 @@ label {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 70%;
+    width: 40%;
     gap:15px;
     padding-left: 30px;
 }
@@ -207,16 +269,34 @@ label {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 30%;
+    width: 20%;
     justify-content: center;
 }
 
+#update-profile-button-mobile {
+    border: #E9B522 2px solid;
+    padding: 6px;
+    background-color:darkred;
+    font-size: 18px;
+    cursor: pointer;
+}
+#delete-profile-button-mobile {
+    color:#E9B522;
+    border: #E9B522 2px solid;
+    padding: 6px;
+    background-color: darkred;
+    font-size: 20px;
+    cursor: pointer;
+}
 .button-in-user-container {
-    background-color: #84A4BC;
+    display: none;
+    background-color: darkred;
     font-weight: 700;
     padding-inline: 5px;
     padding-block: 3px;
-    border: none;
+    border: #E9B522 2px solid;
+    color:#E9B522;
+    cursor: pointer;
 }
 
 .delete-container {
@@ -226,9 +306,10 @@ label {
     margin-top: 25px;
     margin-bottom: 40px;
 }
-.header-table {
+.header-table-mobile {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
     padding: 11px 22px 11px 22px;
     border: 1px solid #7C7C84;
     background: #1554F0;
@@ -253,16 +334,20 @@ label {
 }
 
 .crypto-icone {
-    width: 37px;
-    height: 37px;
     margin-right: 14px;
     border-radius: 50%;
+    width: 50px;
+}
+
+.crypto-icone-name-and-symbol-container {
+    display: flex;
+    flex-direction: row;
+    width: 30%;
 }
 .crypto-container-name-and-symbol {
     display: flex;
     flex-direction: column;
     margin-right: 15px;
-    width: 120px;
     cursor: pointer;
 }
 .crypto-container-name-and-symbol:hover {
@@ -272,8 +357,8 @@ label {
     display: flex;
     flex-direction: column;
     margin-right: 30px;
-    width: 120px;
-
+    width: 40%;
+    text-align: center;
 }
 
 .crypto-symbol {
@@ -293,14 +378,27 @@ label {
 .crypto-price {
     font-weight: 600;
 }
-
+.crypt-title {
+    width: 33%;
+    text-align: start;
+}
 .val-title {
-    padding-left: 20px;
+    width: 33%;
+    text-align: center;
+
+}
+.fav-title {
+    width: 33%;
+    text-align: end;
+
 }
 .heart-container {
     display: grid;
     grid-template: auto;
     align-items: center;
+    width: 20%;
+    text-align: end;
+    padding-right: 50px;
 }
 i {
     font-size: 24px;
@@ -315,7 +413,6 @@ i {
 }
 
 .footer-in-cryptopage {
-    position: fixed;
     left: 0;
     bottom: 0;
     width: 100%;
@@ -339,10 +436,11 @@ i {
 
 .modal-container {
     position: fixed;
-    top: 15%;
+    top: 0;
     width: 100%;
     height: 100%;
     background-color: #84A4BC;
+  
 }
 
 .icone-crypto-in-modal {
@@ -412,4 +510,495 @@ i {
     background-color: white;
     padding:15px;
     border: 1px solid black;
+}
+.favorite-cryptos-container {
+    display: none;
+}
+
+.favorite-cryptos-container-mobile {
+    background-color: #99B0F3;
+    border: 2px solid #7C7C84;
+    display: flex;
+    flex-direction: row;
+    padding-block: 12px;
+    padding-inline: 12px;
+    gap:10px;
+    width: 100%;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.fav-crypto {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.fav-crypto > span {
+    margin-block:5px;
+}
+.fav-crypto-name {
+    font-weight: 800;
+    font-size: 20px;
+    margin:5px;
+}
+
+.delete-fav {
+    color:#E9B522;
+    border: #E9B522 1px solid;
+    padding: 5px;
+    background-color: darkred;
+    font-size: 16px;
+    cursor: pointer;
+}
+.fa-star {
+    padding: 4px;
+    font-size: 18px;
+    border: 1px black solid;
+    background-color: white;
+    border-radius: 50%;
+}
+.header-table-desktop {
+    display: none;
+}
+.chart-container {
+    width: 100%;
+    margin:auto;
+  }
+
+/* MEDIA QUERIES INDEX.HTML */
+
+@media screen and (max-width: 320px) {
+
+    .logo {
+        width: 120px;
+        height: 120px;
+    }
+    .footer-in-landing {
+        font-size: 12px;
+    }
+}
+
+
+@media screen and (min-width: 768px) {
+
+    .header-in-landingpage {
+        display: flex;
+        flex-direction: row-reverse;
+        justify-content: space-between;
+
+    }
+    .title-and-logo {
+        flex-direction: row-reverse;
+        margin:0px;
+        justify-content: start;
+    }
+
+    .nav-bar {
+        display: block;
+    }
+    .logo {
+        width: 130px;
+        height: 130px;
+    }
+    .login-button-desktop {
+        display: block;
+        font-size: 20px;
+        font-weight: 700;
+        padding:14px 34px 14px 34px;
+        background-color: white;
+        border: none;
+        border-radius: 10px;
+        margin-top: 30px;
+        margin-right: 42px;
+    }
+    .signup-button {
+        display: none;
+    }
+
+    .landingpage-image {
+        display: block;
+        width: 70%;
+    }
+
+    .descr-and-img-container-landingpage {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background-color: #07297C;
+    }
+    .description-text {
+        width: 80%;
+        padding-inline:50px;
+        text-align: center;
+        font-size: 30px;
+    }
+    .login-form {
+        display: none;
+    }
+    .body-landingpage {
+        background-color: #07297C;
+    }
+    .signup-button-desktop {
+        display: block;
+        font-size: 26px;
+        font-weight: 700;
+        padding:14px 34px 14px 34px;
+        background-color: white;
+        border: none;
+        border-radius: 5px;
+        margin-top: 50px;
+    }
+
+    .signup-button-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .footer-in-landing {
+        flex-direction: row-reverse;
+        justify-content: end;
+        gap:50px;
+        padding-block: 10px;
+        font-size: 22px;
+    }
+    .logo-in-footer {
+        margin-right: 40px;
+    }
+}
+
+
+@media screen and (min-width: 992px) {
+    .description-text {
+        width: 50%;
+        font-size: 40px;
+        padding-left:80px;
+        padding-right: 20px;
+        text-align: start;
+    }
+.signup-button-container {
+        display: flex;
+        align-items: start;
+        justify-content: start;
+        margin-left:120px;
+    }
+    .signup-button-desktop {
+        margin-top: 0px;
+    
+    }
+
+    .descr-and-img-container-landingpage {
+        flex-direction: row;
+        margin-top: 20px;
+    }
+    .footer-in-landing {
+        flex-direction: row-reverse;
+        justify-content: end;
+        gap:50px;
+        padding-block: 6px;
+        font-size: 18px;
+    }
+    .logo-in-footer {
+        margin-right: 40px;
+    }
+    .landingpage-image {
+        display: block;
+        width: 46%;
+    }
+}
+
+@media screen and (min-width: 1600px) {
+    .description-text {
+        width: 50%;
+        font-size: 40px;
+        padding:80px;
+    
+}
+}
+
+
+/* MEDIA QUERIES SIGNUP.HTML */
+
+
+@media screen and (min-width: 768px) {
+
+    .main-signup {
+        margin-top: 20px;
+        font-size: 24px;
+    }
+    .signup-title {
+        font-size: 26px;
+    }
+    .nav-bar-signup-page {
+        margin-right: 50px;
+    }
+
+    .returntomain-button {
+        font-size: 20px;
+    }
+}
+
+
+/* MEDIA QUERIES CRYPTO.HTML */
+
+
+@media screen and (max-width: 400px) {
+
+    .crypt-title {
+        text-align: start;
+        font-size: 18px;
+    }
+    .val-title {
+        text-align: center;
+        font-size: 18px;
+    }
+    .fav-title {
+        text-align: end;
+        font-size: 18px;
+    }
+    .crypto-icone {
+        width: 30px;
+        height: 30px;
+
+    }
+    .heart-container {
+        width: 10%;
+        padding-right: 25px;
+    }
+    .crypto-container-value-and-percent {
+        width: 50%;
+    }
+    .favorite-cryptos-container-mobile {
+        
+        padding-block: 4px;
+        padding-inline: 2px;
+       
+    }
+}
+
+@media screen and (min-width: 400px) {
+
+    .heart-container {
+        font-size: 20px;
+        width: 10%;
+    }
+    .crypto-container-value-and-percent {
+        font-size: 20px;
+        width: 50%;
+
+    }
+    .crypto-container-name-and-symbol {
+        font-size: 20px;
+    }
+    .crypt-title {
+        width: 30%;
+    }
+    .val-title {
+        width: 50%;
+    }
+    .fav-title {
+        width: 20%;
+        text-align: center;
+    }
+    }
+
+@media screen and (min-width: 500px) {
+
+    .crypto-icone {
+        width: 50px;
+        height: 50px;
+
+    }
+    .crypto-container-name-and-symbol {
+        font-size: 28px;
+    }
+    .heart-container {
+        width: 10%;
+        padding-right: 25px;
+        font-size: 28px;
+        text-align: center;
+    }
+    .crypto-container-value-and-percent {
+        width: 50%;
+        font-size: 28px;
+
+    }
+}
+
+@media screen and (min-width: 768px) {
+
+    #delete-profile-button-mobile {
+        display: none;
+    }
+    #update-profile-button-mobile {
+        display: none;
+    }
+    #update-profile-button {
+        display: block;
+    }
+    #delete-profile-button {
+        display: block;
+    }
+    .nav-icone-mobile {
+        display: none;
+    }
+    .nav-button {
+        display: block;
+    }
+    .main-title-in-cryptopage {
+        font-size: 28px;
+    }
+    .user-info {
+        width: 60%;
+        height: 15%;
+    }
+    .user-container {
+        width: 100%;
+    }
+    .avatar-container {
+        gap:10px;
+    }
+  
+    .delete-container {
+        justify-content: start;     
+    }
+    .avatar {
+        width: 150px;
+        height: 150px;
+    }
+    .favorite-cryptos-container-mobile {
+        display: none;
+    }
+    .favorite-cryptos-container {
+        display: flex;
+        background-color: #99B0F3;
+        border: 2px solid #7C7C84;
+        flex-direction: row;
+        justify-content: center;
+        padding-block: 18px;
+        padding-inline: 18px;
+        gap:15px;
+        width: 40%;
+        height: 80%;
+
+    }
+    .fav-crypto {
+        justify-content: center;
+        height: 80%;
+        font-size: 20px;
+    }
+    .fav-crypto-name {
+        font-size: 22px;
+    }
+    .logo-in-cryptopage {
+        display: block;
+        width: 70px;
+        height: 70px;
+        padding-left: 20px;
+    }
+    .main-title-in-cryptopage {
+        text-align: start;
+    }
+    .footer-in-cryptopage {
+        flex-direction: row-reverse;
+        justify-content: end;
+        gap:50px;
+        padding-block: 10px;
+        font-size: 16px;
+    }
+    .header-table-mobile {
+        display: none;
+    }
+    .header-table-desktop {
+        display: flex;
+        justify-content: space-between;
+        background-color: #1554F0;
+        border: 3px solid #7C7C84;
+        padding-left:8px;
+    }
+    .column-table-desktop {
+        display: flex;
+        justify-content: space-between;
+        width: 50%;
+        padding-block: 20px;
+
+    }
+    .title-column {
+        width: 33%;
+        text-align: center;
+    }
+    .border-on-right-side {
+        border-right: 3px solid #7C7C84;
+    }
+    #crypto-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;   
+        grid-template-rows: 1fr;     
+        font-size: 16px;
+        padding-bottom: 16px;
+    }
+    .crypto-container {
+        border-right: 3px solid #7C7C84;
+        
+    }
+    .crypto-icone-name-and-symbol-container {
+        padding-left: 10px;
+        padding-top: 20px;
+
+    }
+    .crypto-container-value-and-percent {
+        padding-top: 15px;
+    }
+    .fav-title {
+        text-align: end;
+        padding-right: 40px;
+        width: 25%;
+    }
+    .cryptos {
+        padding-top: 0px;
+    }
+    .fa-chart-line {
+       text-align: center;
+       font-size: 40px;
+       color:black;
+       padding: 5px;
+       cursor: pointer;
+    }
+    .fa-chart-line:hover {
+       color: #E9B522;
+     }
+     .fa-eye-slash {
+        text-align: center;
+        font-size: 40px;
+        color:black;
+        padding: 5px;
+        cursor: pointer;
+     }
+     .fa-eye-slash:hover {
+        color: #E9B522;
+      }
+      .modal-container {
+        overflow: scroll;
+        
+      }
+      .chart-container {
+        display: block;
+        width: 70%;
+        margin: auto;
+      }
+}
+
+@media screen and (min-width: 768px) and (max-width: 865px) {
+
+    .crypto-container-name-and-symbol{
+        font-size: 23px;
+    }
+    .crypto-container-value-and-percent {
+        font-size: 23px;
+    }
+}
+
+.chart {
+    width: 300px;
 }
