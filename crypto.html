@@ -1,4 +1,6 @@
 
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -7,6 +9,7 @@
     <title>Mon suivi crypto</title>
     <link rel="stylesheet" href="/css/style.css">
     <script src="script.js"></script>
+    <script src="fetchdata.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;700&family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -15,6 +18,8 @@
 
 </head>
 <body class="body-cryptopage">
+     <div id="database-container"></div>
+
     <header class="header-in-cryptopage">
         <div class="logo-and-title-in-cryptopage">
           <img class="logo-in-cryptopage" src="assets/logo-crypto.png">
@@ -39,9 +44,9 @@
             <i class="fa-solid fa-user-pen" id="update-profile-button-mobile"></i>
         </div>
         <div class="user-info-container">
-          <span class="user-info">Nom d'utilisateur</span>
-          <span class="user-info">Email</span>
-          <span class="user-info">Date de naissance</span>
+          <span class="user-info" id="username-from-db">Nom d'utilisateur</span>
+          <span class="user-info" id="email-from-db">Email</span>
+          <span class="user-info" id="date-from-db">Date de naissance</span>
         </div>
         <div class="favorite-cryptos-container">
           <div class="fav-crypto">
