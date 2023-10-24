@@ -60,17 +60,39 @@ document.addEventListener('DOMContentLoaded', function() {
                 const heartIconeRegul = document.createElement('span');
                 heartIconeRegul.classList.add('fa-heart');
                 heartIconeRegul.classList.add('fa-regular');
+
               
                 const heartIconeFull = document.createElement('span');
                 heartIconeFull.classList.add('fa-solid');
                 heartIconeFull.classList.add('fa-heart');
                 heartIconeFull.style.display = "none";
 
-
                 heartIconeRegul.addEventListener("click", function(){
-                heartIconeRegul.style.display = "none";
-                heartIconeFull.style.display = "block";
-                })
+                    heartIconeRegul.style.display = "none";
+                    heartIconeFull.style.display = "block";
+                    addToFavorites(crypto.name, crypto.current_price.toFixed(2) + ' €', cryptoPercent.textContent);
+                });
+                function addToFavorites(cryptoName, cryptoPrice, cryptoPercent) {
+                    fetch('add_to_favorites.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            cryptoName: cryptoName,
+                            cryptoPrice: cryptoPrice,
+                            cryptoPercent: cryptoPercent
+                        })        
+                    })
+                    .then(() => {
+                        location.reload();
+                    })
+                    .catch(error => {
+                        console.error('Erreur lors de la requête fetch:', error);
+                    });
+                }
+                
+              
 
                 heartIconeFull.addEventListener("click", function(){
                     heartIconeFull.style.display = "none";
@@ -359,3 +381,38 @@ function masquerCanvas() {
   
   
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const deleteIcons = document.querySelectorAll('.delete-fav');
+
+    deleteIcons.forEach((icon) => {
+        icon.addEventListener('click', function() {
+            const favNumber = this.getAttribute('data-favnum');
+            deleteFavorite(favNumber);
+        });
+    });
+});
+
+
+
+function deleteFavorite(favNumber) {
+    fetch('delete_favorite.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            fav: `fav${favNumber}`
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            location.reload();
+        } else {
+            console.error("Erreur lors de la suppression du favori");
+        }
+    })
+}
+    

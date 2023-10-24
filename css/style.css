@@ -12,7 +12,7 @@ header {
 h1 {
    color: #E9B522;
    text-align: center;
-
+    text-decoration: none;
 }
 h2 {
     font-weight: 800;
@@ -209,6 +209,7 @@ label {
     font-size: 15px;
     padding: 10px;
 }
+
 /* CRYPTO PAGE */
 
 .body-cryptopage {
@@ -223,12 +224,14 @@ label {
     flex-direction: row;
     align-items: center;
     width: 50%;
+    text-decoration: none;
 
 }
 .main-title-in-cryptopage {
     margin:0px;
     font-size: 16px;
     width: 74%;
+    text-decoration: none;
     margin-left: 10px;
 }
 
@@ -313,6 +316,14 @@ label {
     font-size: 18px;
     cursor: pointer;
 }
+#validate-profile-button-mobile {
+    display: none;
+    border: #E9B522 2px solid;
+    padding: 6px;
+    background-color:darkred;
+    font-size: 18px;
+    cursor: pointer;
+}
 #delete-profile-button-mobile {
     color:#E9B522;
     border: #E9B522 2px solid;
@@ -321,7 +332,22 @@ label {
     font-size: 20px;
     cursor: pointer;
 }
+#update-profile-button {
+    display: none;
+}
+#delete-profile-button {
+    display: none;
+}
 .button-in-user-container {
+    background-color: darkred;
+    font-weight: 700;
+    padding-inline: 5px;
+    padding-block: 3px;
+    border: #E9B522 2px solid;
+    color:#E9B522;
+    cursor: pointer;
+}
+#validate-update-button {
     display: none;
     background-color: darkred;
     font-weight: 700;
@@ -331,7 +357,6 @@ label {
     color:#E9B522;
     cursor: pointer;
 }
-
 .delete-container {
     display: flex;
     justify-content: end;
@@ -883,9 +908,13 @@ i {
     #update-profile-button-mobile {
         display: none;
     }
+    #validate-profile-button-mobile {
+        display: none;
+    }
     #update-profile-button {
         display: block;
     }
+  
     #delete-profile-button {
         display: block;
     }

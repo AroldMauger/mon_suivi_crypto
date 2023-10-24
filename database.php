@@ -1,12 +1,15 @@
 <?php
+try {
+    $databaseHandler = new PDO('mysql:host=127.0.0.1;dbname=monsuivicryptodb;port=3307;charset=utf8mb4', 'monsuivicrypto', 'mystudiproject');
 
-$databaseHandler = new PDO('mysql:host=127.0.0.1;dbname=monsuivicryptodb;port=3307;charset=utf8mb4', 'monsuivicrypto', 'mystudiproject');
+    $statement = $databaseHandler->query('SELECT * FROM user');
+    $infos = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-$statement = $databaseHandler->query('SELECT * FROM user');
-$infos = $statement->fetchAll(PDO::FETCH_ASSOC);
+    echo json_encode($infos);
 
-echo json_encode($infos);
-
-
-$databaseHandler = null;
+    $databaseHandler = null;
+} catch (Exception $e) {
+    echo 'Probleme: ' . $e->getMessage();
+    exit;
+}
 ?>

@@ -11,24 +11,7 @@ const username = document.querySelector("#username");
 const password = document.querySelector("#password");
 const passwordError = document.getElementById("password-error");
 const conditions = document.querySelector(".checkbox-input");
-  
-function validate() {
-    
-    const firstNameIsValid = firstName.value.trim().length >= 2;
-    const lastNameIsValid = lastName.value.trim().length >= 2;
-    const userNameIsValid = username.value.trim().length >= 2;
-    const emailIsValid = email.checkValidity();
-    const birthdateIsValid = birthdate.value !== "";
-    const passwordIsValid = password.checkValidity();
 
-    if (firstNameIsValid && lastNameIsValid && emailIsValid && birthdateIsValid && userNameIsValid && passwordIsValid) {
-        form.reset()
-    } else {
-        throw new Error("Formulaire non valide");
-    }
-}
-
-form.addEventListener("submit", validate);
 
 
 conditions.addEventListener("click", disableSubmit)
