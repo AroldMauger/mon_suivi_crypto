@@ -1,21 +1,42 @@
 <?php
+$host = '127.0.0.1';
+$db   = 'monsuivicryptodb';
+$user = 'monsuivicrypto';
+$pass = 'mystudiproject';
+$charset = 'utf8mb4';
+$port = '3307';
+
+$dsn = "mysql:host=$host;dbname=$db;port=$port;charset=$charset";
+$options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
 
 try {
-    $databaseHandler = new PDO('mysql:host=127.0.0.1;dbname=monsuivicryptodb;port=3307;charset=utf8mb4', 'monsuivicrypto', 'mystudiproject');
+    $databaseHandler = new PDO($dsn, $user, $pass, $options);
+} catch (PDOException $e) {
+    die("Erreur : " . $e->getMessage());
+}
+
  
-    $query = "SELECT username, email, datenaissance, fav1, fav2, fav3 FROM user WHERE id ='64'";
-    $statement = $databaseHandler->prepare($query);
-    $statement->execute();
-    $userInfo = $statement->fetch(PDO::FETCH_ASSOC);
+session_start();
 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');  // redirige vers la page de connexion si l'utilisateur n'est pas connecté
+    exit;
+}
 
+$user_id = $_SESSION['user_id'];
+
+$query = "SELECT username, email, datenaissance, fav1, fav2, fav3, photo FROM user WHERE id = :user_id";
+$statement = $databaseHandler->prepare($query);
+$statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+$statement->execute();
+$userInfo = $statement->fetch(PDO::FETCH_ASSOC);
      $favorites = [];
      for ($i = 1; $i <= 3; $i++) {
      $favorites["fav$i"] = json_decode($userInfo["fav$i"], true);
-     }
-
-} catch (Exception $e) {
-    echo $e->getMessage();  
 }
 ?>
 
@@ -41,25 +62,33 @@ try {
 
     <header class="header-in-cryptopage">
         <div class="logo-and-title-in-cryptopage">
-          <a href="index.html">
+          <a href="index.php">
                <img class="logo-in-cryptopage" src="assets/logo-crypto.png">
           </a>
           <h1 class="main-title-in-cryptopage">MON SUIVI CRYPTO</h1>
         </div>
         <nav class="nav-bar-cryptopage">
             <a href="#user-container-id" class="nav-button">Profil</a>
-            <a class="nav-button">Log out</a>
+            <a href="logout.php" class="nav-button">Log out</a>
+            
             <a href="#user-container-id" class="nav-icone-mobile">
                <i class="fa-solid fa-user icone-nav-bar"></i>
             </a>
-            <a class="nav-icone-mobile">
+            <a href="logout.php" class="nav-icone-mobile">
                <i class="fa-solid fa-right-from-bracket icone-nav-bar"></i>
             </a>
         </nav>  
     </header>
    <div class="user-container" id="user-container-id">
         <div class="avatar-container">
-            <img src="/assets/avatar.png" class="avatar" alt="un exemple d'avatar">
+        <div class="image-container">
+        <img src="<?php echo isset($userInfo['photo']) ? htmlspecialchars($userInfo['photo']) . '?t=' . time() : '/assets/avatar.png'; ?>" class="avatar" alt="Photo de profil" id="user-avatar">
+          <form class="update-profile-picture-form" action="upload.php" method="post" enctype="multipart/form-data">
+               <input type="file" name="profileImage" id="profileImage" style="display:none;">
+               <button type="button" id="update-profile-photo">+</button>
+          </form>
+        </div>
+
             <button type="submit" class="button-in-user-container" id="update-profile-button">Modifier profil</button>
             <button type="submit" class="button-in-user-container" id="validate-update-button">Valider</button>
             <form action="deleteuser.php" method="post">
@@ -82,8 +111,8 @@ try {
                <div class="fav-crypto">
                     <i class="fa-solid fa-star"></i>
                     <span class="fav-crypto-name"><?php echo $favorites["fav$i"]['name'] ?? ''; ?></span>
-                    <span><?php echo $favorites["fav$i"]['price'] ?? ''; ?></span>
-                    <span><?php echo $favorites["fav$i"]['percent'] ?? ''; ?></span>
+                    <span class="fav-crypto-price"><?php echo $favorites["fav$i"]['price'] ?? ''; ?></span>
+                    <span class="percent-favcryptos"><?php echo $favorites["fav$i"]['percent'] ?? ''; ?></span>
                     <i class="fa-solid fa-trash-can delete-fav" data-favnum="<?php echo $i; ?>"></i>
                </div>
                <?php endfor; ?>
@@ -91,6 +120,8 @@ try {
    </div>
    <form action="deleteuser.php" method="post" class="delete-container">
         <button type="submit" class="fa-solid fa-trash-can" id="delete-profile-button-mobile"></button>
+        <input type="hidden" name="username" value="<?php echo isset($userInfo['username']) ? $userInfo['username'] : ''; ?>">
+
    </form>
 
    <div class="favorite-cryptos-container-mobile">
@@ -98,8 +129,8 @@ try {
                <div class="fav-crypto">
                     <i class="fa-solid fa-star"></i>
                     <span class="fav-crypto-name"><?php echo $favorites["fav$i"]['name'] ?? ''; ?></span>
-                    <span><?php echo $favorites["fav$i"]['price'] ?? ''; ?></span>
-                    <span><?php echo $favorites["fav$i"]['percent'] ?? ''; ?></span>
+                    <span class="fav-crypto-price"><?php echo $favorites["fav$i"]['price'] ?? ''; ?></span>
+                    <span class="percent-favcryptos"><?php echo $favorites["fav$i"]['percent'] ?? ''; ?></span>
                     <i class="fa-solid fa-trash-can delete-fav" data-favnum="<?php echo $i; ?>"></i>
                </div>
                <?php endfor; ?>

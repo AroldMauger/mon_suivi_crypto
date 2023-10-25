@@ -1,5 +1,7 @@
 // DESKTOP //
 const updateButton = document.getElementById('update-profile-button');
+const validateButton = document.getElementById('validate-update-button')
+
 updateButton.addEventListener('click', function(event) {
     event.stopPropagation();
 
@@ -44,9 +46,8 @@ document.body.addEventListener('click', function(event) {
                 document.getElementById('username-from-db').textContent = usernameInput;
                 document.getElementById('email-from-db').textContent = emailInput;
                 document.getElementById('date-from-db').textContent = dateInput;
-
-                event.target.textContent = "Modifier profil";
-                event.target.id = "update-profile-button";
+                validateButton.style.display = "none";
+                updateButton.style.display = "block";
                 alert("Profil mis à jour avec succès!");
             } else {
                 console.error("Erreur lors de la mise à jour du profil");
@@ -64,6 +65,7 @@ document.body.addEventListener('click', function(event) {
     }
 });
 
+const validateButtonMobile = document.getElementById('validate-profile-button-mobile')
 
 // MOBILE //
 const updateButtonMobile = document.getElementById('update-profile-button-mobile');
@@ -73,7 +75,7 @@ updateButtonMobile.addEventListener('click', function(event) {
     let username = document.getElementById('username-from-db');
     let email = document.getElementById('email-from-db');
     let date = document.getElementById('date-from-db');
-    const validateButton = document.getElementById('validate-profile-button-mobile')
+    const validateButtonMobile = document.getElementById('validate-profile-button-mobile')
 
     // Remplacez chaque span par un champ d'entrée
     username.innerHTML = `<input type="text" id="username-input" value="${username.textContent}" />`;
@@ -82,7 +84,7 @@ updateButtonMobile.addEventListener('click', function(event) {
 
     // Modifiez le bouton pour "Valider"
     updateButtonMobile.style.display = "none";
-    validateButton.style.display = "block";
+    validateButtonMobile.style.display = "block";
 });
 document.body.addEventListener('click', function(event) {
     if (event.target.id === "validate-profile-button-mobile") {
@@ -112,7 +114,8 @@ document.body.addEventListener('click', function(event) {
                 document.getElementById('email-from-db').textContent = emailInput;
                 document.getElementById('date-from-db').textContent = dateInput;
 
-                event.target.id = "update-profile-button-mobile";
+                updateButtonMobile.style.display = "block";
+                validateButtonMobile.style.display = "none";                
                 alert("Profil mis à jour avec succès!");
             } else {
                 console.error("Erreur lors de la mise à jour du profil");
@@ -127,5 +130,28 @@ document.body.addEventListener('click', function(event) {
             // Réactivez le bouton une fois que tout est terminé
             event.target.disabled = false;
         });
+    }
+});
+
+// GESTION DES COULEURS DES POURCENTAGES DES CRYPTOS FAVORITES
+const percentFavCryptos = document.querySelectorAll(".percent-favcryptos");
+
+percentFavCryptos.forEach(percentFavCrypto => {
+    if (percentFavCrypto.textContent.includes("-")) {
+        percentFavCrypto.classList.add("red");
+    } else {
+        percentFavCrypto.classList.add("green");
+    }
+});
+
+// GESTION DE L'AJOUT D'UNE NOUVELLE PHOTO DE PROFIL
+
+document.getElementById('update-profile-photo').addEventListener('click', function() {
+    document.getElementById('profileImage').click();
+});
+
+document.getElementById('profileImage').addEventListener('change', function() {
+    if (this.files && this.files[0]) {
+        document.querySelector('.update-profile-picture-form').submit();
     }
 });

@@ -40,7 +40,7 @@ error_reporting(E_ALL);
 </head>
 <body>
     <nav class="nav-bar-signup-page">
-        <a href="/index.html" class="returntomain-button">Accueil</a>
+        <a href="/index.php" class="returntomain-button">Accueil</a>
     </nav>  
     <div class="signup-confirmation-message-container">
     <p class="signup-confirmation-message confirmation-message">

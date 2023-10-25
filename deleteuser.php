@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 try {
     $databaseHandler = new PDO('mysql:host=127.0.0.1;dbname=monsuivicryptodb;port=3307;charset=utf8mb4', 'monsuivicrypto', 'mystudiproject');
     
@@ -12,11 +12,10 @@ try {
         
         $statement->execute();
 
-        // Si des lignes ont été affectées, alors un utilisateur a bien été supprimé
         if($statement->rowCount() > 0) {
-            $message = "Le compte : {$_POST['username']} a bien été supprimé!";
+            $_SESSION['message'] = "Le compte : {$_POST['username']} a bien été supprimé!";
         } else {
-            $message = "Aucun compte trouvé avec le nom d'utilisateur : {$_POST['username']}.";
+            $_SESSION['message'] = "Aucun compte trouvé avec le nom d'utilisateur : {$_POST['username']}.";
         }
         
     } else {
@@ -44,7 +43,7 @@ error_reporting(E_ALL);
 </head>
 <body>
     <nav class="nav-bar-signup-page">
-        <a href="/index.html" class="returntomain-button">Accueil</a>
+        <a href="/index.php" class="returntomain-button">Accueil</a>
     </nav>  
     <div class="signup-confirmation-message-container">
     <p class="signup-confirmation-message confirmation-message">

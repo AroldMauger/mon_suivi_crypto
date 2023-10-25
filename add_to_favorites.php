@@ -1,8 +1,12 @@
 <?php
+session_start();
 
+if (!isset($_SESSION['user_id'])) {
+    die('Utilisateur non connecté.');
+}
     $databaseHandler = new PDO('mysql:host=127.0.0.1;dbname=monsuivicryptodb;port=3307;charset=utf8mb4', 'monsuivicrypto', 'mystudiproject');
  
-    $id = '64';
+    $id = $_SESSION['user_id'];
     $stmt = $databaseHandler->prepare("SELECT fav1, fav2, fav3 FROM user WHERE id = :id");
     $stmt->execute(['id' => $id]);
     $row = $stmt->fetch();
@@ -19,10 +23,10 @@ $favData = json_encode([
     'percent' => $cryptoPercent
 ]);
 for ($i = 1; $i <= 3; $i++) {
-     if (!$row["fav$i"]) {
-         $stmt = $databaseHandler->prepare("UPDATE user SET fav$i = :favData WHERE id = '64'");
-         $stmt->execute(['favData' => $favData]);
-         break;
-     }
- }
+    if (!$row["fav$i"]) {
+        $stmt = $databaseHandler->prepare("UPDATE user SET fav$i = :favData WHERE id = :id");
+        $stmt->execute(['favData' => $favData, 'id' => $id]);
+        break;
+    }
+}
 ?>
