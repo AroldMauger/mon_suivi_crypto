@@ -1,18 +1,11 @@
 <?php
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $userId = $_POST['user_id'] ?? null;
+require '../utils/user_functions.php';
 
-    if ($userId) {
-        $databaseHandler = new PDO('mysql:host=127.0.0.1;dbname=monsuivicryptodb;port=3307;charset=utf8mb4', 'monsuivicrypto', 'mystudiproject');
-        $query = "DELETE FROM user WHERE id = :id";
-        $statement = $databaseHandler->prepare($query);
-        $statement->bindParam(':id', $userId, PDO::PARAM_INT);
-        $statement->execute();
-    }
-
-    // Redirigez l'utilisateur vers la page de gestion des utilisateurs après la suppression
-    header('admin.php');
-    exit;
+if (isset($_POST['prenom'], $_POST['nom'], $_POST['datenaissance'], $_POST['email'], $_POST['username'], $_POST['motdepasse'])) {
+    $result = addUser($_POST['prenom'], $_POST['nom'], $_POST['datenaissance'], $_POST['email'], $_POST['username'], $_POST['motdepasse']);
+    $message = $result['message'];
+} else {
+    $message = "Tous les champs sont requis.";
 }
 
 ?>

@@ -23,15 +23,15 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
 <body class="body-admin">
     <header class="header-in-admin">
         <div class="logo-and-title-in-cryptopage">
-          <a href="index.php">
-               <img class="logo-in-cryptopage" src="assets/logo-crypto.png">
+          <a href="/index.php">
+               <img class="logo-in-cryptopage" src="/assets/logo-crypto.png">
           </a>
           <h1 class="main-title-in-cryptopage">MON SUIVI CRYPTO</h1>
         </div>
         <nav class="nav-bar-cryptopage">
-            <a href="logout.php" class="nav-button">Log out</a>
+            <a href="/pages/logout_web.php" class="nav-button">Log out</a>
             
-            <a href="logout.php" class="nav-icone-mobile">
+            <a href="/pages/logout_web.php" class="nav-icone-mobile">
                <i class="fa-solid fa-right-from-bracket icone-nav-bar"></i>
             </a>
         </nav>  
@@ -43,7 +43,7 @@ $users = $statement->fetchAll(PDO::FETCH_ASSOC);
         <span class="admin-info-user" id="admin-username">Utilisateur : <?php echo htmlspecialchars($user['username']); ?></span>
         <span class="admin-info-user" id="admin-email">Email : <?php echo htmlspecialchars($user['email']); ?></span>
         <span class="admin-info-user" id="admin-datenaissance">Date de naissance : <?php echo htmlspecialchars($user['datenaissance']); ?></span>
-        <form action="admin_delete_user.php" method="post">
+        <form action="admin_deleteuser_web.php" method="post">
             <input type="hidden" name="user_id" value="<?php echo $user['id']; ?>">
             <button type="submit" class="admin-delete-user-button">SUPPRIMER</button>
         </form>

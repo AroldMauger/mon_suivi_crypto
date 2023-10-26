@@ -28,7 +28,7 @@ document.body.addEventListener('click', function(event) {
         // Désactivez temporairement le bouton
         event.target.disabled = true;
         console.log(usernameInput)
-        fetch('update_profile.php', {
+        fetch('/pages/update_profile_web.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -95,7 +95,7 @@ document.body.addEventListener('click', function(event) {
         // Désactivez temporairement le bouton
         event.target.disabled = true;
         console.log(usernameInput)
-        fetch('update_profile.php', {
+        fetch('/pages/update_profile_web.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

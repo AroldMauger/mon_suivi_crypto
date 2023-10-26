@@ -1,7 +1,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     var cryptoContainer = document.getElementById('crypto-container');
-    var apiUrl = 'api.php'; 
+    var apiUrl = '/api_coingecko.php'; 
 
     fetch(apiUrl)
         .then(function(response) {
@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     addToFavorites(crypto.name, crypto.current_price.toFixed(2) + ' €', cryptoPercent.textContent);
                 });
                 function addToFavorites(cryptoName, cryptoPrice, cryptoPercent) {
-                    fetch('add_to_favorites.php', {
+                    fetch('/pages/addtofavorites_web.php', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -397,7 +397,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 function deleteFavorite(favNumber) {
-    fetch('delete_favorite.php', {
+    fetch('/pages/deletefavorite_web.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

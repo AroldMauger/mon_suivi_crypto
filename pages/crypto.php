@@ -1,45 +1,30 @@
 <?php
-$host = '127.0.0.1';
-$db   = 'monsuivicryptodb';
-$user = 'monsuivicrypto';
-$pass = 'mystudiproject';
-$charset = 'utf8mb4';
-$port = '3307';
+include_once '../api/config.php';
+include_once '../utils/user_functions.php';
 
-$dsn = "mysql:host=$host;dbname=$db;port=$port;charset=$charset";
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES   => false,
-];
-
-try {
-    $databaseHandler = new PDO($dsn, $user, $pass, $options);
-} catch (PDOException $e) {
-    die("Erreur : " . $e->getMessage());
-}
-
- 
 session_start();
 
 if (!isset($_SESSION['user_id'])) {
-    header('Location: login.php');  // redirige vers la page de connexion si l'utilisateur n'est pas connecté
+    header('Location: login.php');  
     exit;
 }
 
 $user_id = $_SESSION['user_id'];
 
+$databaseHandler = getDatabaseConnection();
 $query = "SELECT username, email, datenaissance, fav1, fav2, fav3, photo FROM user WHERE id = :user_id";
 $statement = $databaseHandler->prepare($query);
 $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 $statement->execute();
 $userInfo = $statement->fetch(PDO::FETCH_ASSOC);
-     $favorites = [];
-     for ($i = 1; $i <= 3; $i++) {
-     $favorites["fav$i"] = json_decode($userInfo["fav$i"], true);
-}
-?>
 
+$favoritesData = getFavorites($user_id);
+$favorites = [];
+for ($i = 1; $i <= 3; $i++) {
+    $favorites["fav$i"] = json_decode($favoritesData["fav$i"], true);
+}
+
+?>
 
 <!DOCTYPE html>
 <html lang="fr">
@@ -48,7 +33,7 @@ $userInfo = $statement->fetch(PDO::FETCH_ASSOC);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mon suivi crypto</title>
     <link rel="stylesheet" href="/css/style.css">
-    <script src="script.js"></script>
+    <script src="/utils/script.js"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,18 +48,18 @@ $userInfo = $statement->fetch(PDO::FETCH_ASSOC);
     <header class="header-in-cryptopage">
         <div class="logo-and-title-in-cryptopage">
           <a href="index.php">
-               <img class="logo-in-cryptopage" src="assets/logo-crypto.png">
+               <img class="logo-in-cryptopage" src="/assets/logo-crypto.png">
           </a>
           <h1 class="main-title-in-cryptopage">MON SUIVI CRYPTO</h1>
         </div>
         <nav class="nav-bar-cryptopage">
             <a href="#user-container-id" class="nav-button">Profil</a>
-            <a href="logout.php" class="nav-button">Log out</a>
+            <a href="/pages/logout_web.php" class="nav-button">Log out</a>
             
             <a href="#user-container-id" class="nav-icone-mobile">
                <i class="fa-solid fa-user icone-nav-bar"></i>
             </a>
-            <a href="logout.php" class="nav-icone-mobile">
+            <a href="/pages/logout_web.php" class="nav-icone-mobile">
                <i class="fa-solid fa-right-from-bracket icone-nav-bar"></i>
             </a>
         </nav>  
@@ -83,7 +68,7 @@ $userInfo = $statement->fetch(PDO::FETCH_ASSOC);
         <div class="avatar-container">
         <div class="image-container">
         <img src="<?php echo isset($userInfo['photo']) ? htmlspecialchars($userInfo['photo']) . '?t=' . time() : '/assets/avatar.png'; ?>" class="avatar" alt="Photo de profil" id="user-avatar">
-          <form class="update-profile-picture-form" action="upload.php" method="post" enctype="multipart/form-data">
+          <form class="update-profile-picture-form" action="/pages/upload_web.php" method="post" enctype="multipart/form-data">
                <input type="file" name="profileImage" id="profileImage" style="display:none;">
                <button type="button" id="update-profile-photo">+</button>
           </form>
@@ -91,7 +76,7 @@ $userInfo = $statement->fetch(PDO::FETCH_ASSOC);
 
             <button type="submit" class="button-in-user-container" id="update-profile-button">Modifier profil</button>
             <button type="submit" class="button-in-user-container" id="validate-update-button">Valider</button>
-            <form action="deleteuser.php" method="post">
+            <form action="/pages/deleteuser_web.php" method="post">
                <button type="submit" class="button-in-user-container" id="delete-profile-button">Supprimer profil</button>
                <input type="hidden" name="username" value="<?php echo isset($userInfo['username']) ? $userInfo['username'] : ''; ?>">
             </form>
@@ -118,7 +103,7 @@ $userInfo = $statement->fetch(PDO::FETCH_ASSOC);
                <?php endfor; ?>
         </div>
    </div>
-   <form action="deleteuser.php" method="post" class="delete-container">
+   <form action="/pages/deleteuser_web.php" method="post" class="delete-container">
         <button type="submit" class="fa-solid fa-trash-can" id="delete-profile-button-mobile"></button>
         <input type="hidden" name="username" value="<?php echo isset($userInfo['username']) ? $userInfo['username'] : ''; ?>">
 
@@ -162,7 +147,7 @@ $userInfo = $statement->fetch(PDO::FETCH_ASSOC);
         <a>Mentions légales</a>
         <a href="mailto:monsuivicrypto@projet.fr" class="contact">Contactez-nous</a>
    </footer>
-   <script src="update_profile.js"></script>
+   <script src="/utils/update_profile.js"></script>
 
 </body>
 </html>

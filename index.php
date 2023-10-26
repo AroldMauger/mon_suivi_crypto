@@ -30,7 +30,7 @@
         </div>
         <div class="login-form">
             <h2 class="title-login-mobile">Se connecter</h2>
-            <form action="login.php" method="post" class="inputs-container-login">
+            <form action="/pages/login_web.php" method="post" class="inputs-container-login">
                 <input class="input-in-login-form" type="text" name="username" id="username-input-login" placeholder="Nom d'utilisateur" required>
                 <input class="input-in-login-form" type="password" name="motdepasse" id="password-input-login" placeholder="Mot de passe" required>
                 <button type="submit" id="submit-login">Envoyer</button>
@@ -48,7 +48,7 @@
         <a>Mentions légales</a>
         <a href="mailto:monsuivicrypto@projet.fr" class="contact">Contactez-nous</a>
    </footer>
-   <script src="login.js"></script>
+   <script src="/utils/login.js"></script>
 
 </body>
 </html>
