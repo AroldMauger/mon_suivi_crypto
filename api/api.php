@@ -1,49 +1,54 @@
 <?php
 
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
+header("Access-Control-Allow-Headers: Content-Type");
+
 require_once 'config.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
-$requestUri = $_SERVER['REQUEST_URI'];
+$base = "/api/api.php";
+$requestUri = str_replace($base, "", $_SERVER['REQUEST_URI']);
 
 switch ($requestUri) {
     case '/login':
-        require 'api/login_mob.php';
+        require 'login_mob.php';
         break;
 
     case '/logout':
-        require 'api/logout_mob.php';
+        require 'logout_mob.php';
         break;
 
     case '/delete':
-        require 'api/deleteuser_mob.php';
+        require 'deleteuser_mob.php';
         break;
 
     case '/adduser':
-        require 'api/adduser_mob.php';
+        require 'adduser_mob.php';
         break;
 
     case '/update':
-        require 'api/update_profile_mob.php';
+        require 'update_profile_mob.php';
         break;
 
     case '/uploadpicture':
-        require 'api/upload_mob.php';
+        require 'upload_mob.php';
         break;
 
     case '/addtofavorites':
-        require 'api/addtofavorites_mob.php';
+        require 'addtofavorites_mob.php';
         break;
 
     case '/deletefavorite':
-        require 'api/deletefavorite_mob.php';
+        require 'deletefavorite_mob.php';
         break;
 
     case '/admin':
-        require 'api/admin_mob.php';
+        require 'admin_mob.php';
         break;
 
     case '/admin_deleteuser':
-        require 'api/admin_deleteuser_mob.php';
+        require 'admin_deleteuser_mob.php';
         break;
 
      
