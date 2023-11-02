@@ -304,7 +304,7 @@ function displayChart(cryptoId, container) {
                     labels: timestamps,
                     datasets: [
                         {
-                            label: "Prix en EUR sur 7 jours",
+                            label: "Prix en EUR sur 14 jours",
                             data: prices,
                             borderColor: "rgba(75, 192, 192, 1)",
                             borderWidth: 1,

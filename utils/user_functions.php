@@ -220,6 +220,7 @@ function getFavorites($userId) {
     $stmt->execute(['id' => $userId]);
     return $stmt->fetch();
 }
+
 // FONCTION POUR AJOUTER UNE CRYPTO FAVORITE
 
 function addFavorite($userId, $favData) {
@@ -230,15 +231,17 @@ function addFavorite($userId, $favData) {
         if (!$currentFavorites["fav$i"]) {
             $stmt = $databaseHandler->prepare("UPDATE user SET fav$i = :favData WHERE id = :id");
             $stmt->execute(['favData' => $favData, 'id' => $userId]);
+            error_log("Favorite added successfully for user $userId at position $i.");
             return true; 
         }
     }
 
+    error_log("All favorite slots are occupied for user $userId.");
     return false; 
 }
 
-// FONCTION POUR SUPPRIMER UNE CRYPTO FAVORITE
 
+// FONCTION POUR SUPPRIMER UNE CRYPTO FAVORITE
 function deleteFavorite($userId, $favColumn) {
     $databaseHandler = getDatabaseConnection();
 
@@ -250,8 +253,16 @@ function deleteFavorite($userId, $favColumn) {
     $stmt = $databaseHandler->prepare("UPDATE user SET $favColumn = NULL WHERE id = :id");
     $success = $stmt->execute(['id' => $userId]);
 
+    if (!$success) {
+        $errorInfo = $stmt->errorInfo();
+        return ['success' => false, 'message' => "Database error: " . $errorInfo[2]];
+    } elseif ($stmt->rowCount() === 0) {
+        return ['success' => false, 'message' => "No rows were affected. User ID might not exist or favorite was already NULL."];
+    }
+
     return ['success' => $success];
 }
+
 
 
 ?>

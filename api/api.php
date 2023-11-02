@@ -39,6 +39,10 @@ switch ($requestUri) {
         require 'addtofavorites_mob.php';
         break;
 
+    case '/getfavorites':
+        require 'getfavorites_mob.php';
+        break;
+
     case '/deletefavorite':
         require 'deletefavorite_mob.php';
         break;

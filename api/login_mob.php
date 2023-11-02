@@ -1,14 +1,19 @@
 <?php
 include_once 'config.php'; 
 include_once '../utils/user_functions.php'; 
+session_start();
 
 $response = [];
 
 if (isset($_POST['username'], $_POST['motdepasse'])) {
     $result = loginUser($_POST['username'], $_POST['motdepasse']);
-    
+ 
     if ($result['success']) {
+
         $user_id = $result['user_id'];
+        $_SESSION['user_id'] = $user_id;
+        $_SESSION['is_logged_in'] = true;
+
         $query = "SELECT username, email, datenaissance, fav1, fav2, fav3, photo FROM user WHERE id = :user_id";
         $statement = getDatabaseConnection()->prepare($query);
         $statement->bindParam(':user_id', $user_id, PDO::PARAM_INT);
