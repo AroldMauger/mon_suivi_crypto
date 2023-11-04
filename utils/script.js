@@ -46,11 +46,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (cryptoPercentValue > 0) {
                     const formattedPercentage = parseFloat(crypto.price_change_percentage_24h).toFixed(2);
-                    cryptoPercent.textContent = '+' + formattedPercentage + ' €';
+                    cryptoPercent.textContent = '+' + formattedPercentage + ' %';
                     cryptoPercent.classList.add("green");
                 } else {
                     const formattedPercentage = parseFloat(crypto.price_change_percentage_24h).toFixed(2);
-                    cryptoPercent.textContent = formattedPercentage + ' €';
+                    cryptoPercent.textContent = formattedPercentage + ' %';
                     cryptoPercent.classList.add("red");
                 }
                 
@@ -197,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                         const percentageSpan = document.createElement("span");
                         percentageSpan.classList.add("green");
-                        percentageSpan.textContent = '+' + formattedPercentage + ' €';
+                        percentageSpan.textContent = '+' + formattedPercentage + ' %';
                         percentageSpan.style.fontWeight = 800;
 
                         cryptoPercentInModal.textContent = 'Variation du prix en % depuis 24H : ';
@@ -207,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     
                         const percentageSpan = document.createElement("span");
                         percentageSpan.classList.add("red");
-                        percentageSpan.textContent = formattedPercentage + ' €';
+                        percentageSpan.textContent = formattedPercentage + ' %';
                         percentageSpan.style.fontWeight = 800;
                     
                         cryptoPercentInModal.textContent = 'Variation du prix en % depuis 24H : ';
